@@ -1,0 +1,130 @@
+{% extends 'BlogBundle::base.html.twig' %}
+
+{% block title %}Blog{% endblock %}
+
+{% block stylesheets %}{% endblock %}
+
+{% block javascripts %}{% endblock %}
+
+{% block body -%}
+    
+<div class="container">
+    <div class="row">    
+    	<div class="col-lg-12">
+            <div class="page-header">
+                <h2>Post list</h2>
+            </div>
+            <ul class="breadcrumb">
+                <li><a href="{{ path('blog_homepage') }}">Start</a></li>
+                <li class="active">Blog</li>
+            </ul>
+    	</div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+        {% for entity in entities %}
+            
+            {{ include('BlogBundle:Post:_post.html.twig') }}
+
+        {% endfor %}
+        
+            <div class="row">
+                <div class="col-md-12">
+                    <p><strong>{{ total_posts }}</strong> posts
+                        {% if last_page > 1 %}
+                            - page <strong>{{ current_page }}/{{ last_page }}</strong>
+                        {% endif %}</p>
+                </div>
+            </div>
+
+            {% if last_page > 1 %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-center">
+                        <ul class="pagination">
+                          <li><a href="{{ path('post', { 'page': 1 }) }}">&lsaquo;</a></li>
+                          <li><a href="{{ path('post', { 'page': previous_page }) }}">&laquo;</a></li>
+
+                      {% for page in 1..last_page %}
+                        {% if page == current_page %}
+                          <li class="active"><a href="#">{{ page }}</a></li>
+                        {% else %}
+                          <li><a href="{{ path('post', { 'page': page }) }}">{{ page }}</a></li>
+                        {% endif %}
+                      {% endfor %}
+
+                          <li><a href="{{ path('post', { 'page': next_page }) }}">&raquo;</a></li>
+                          <li><a href="{{ path('post', { 'page': last_page }) }}">&rsaquo;</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {% endif %}   
+        
+        </div>
+        <div class="col-md-4">
+            {{ include('BlogBundle:Post:_sidebar.html.twig', { 'categories': categories, 'tags': tags, 'archives': archives }) }}
+        </div>
+    </div>
+</div>
+    
+{#
+    <h1>Post list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Slug</th>
+                <th>Excerpt</th>
+                <th>Content</th>
+                <th>Author_email</th>
+                <th>Status_post</th>
+                <th>Show_comment</th>
+                <th>Enable_comment</th>
+                <th>Views_post</th>
+                <th>Published_at</th>
+                <th>Updated_at</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('post_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td><a href="{{ path('post_show', { 'id': entity.id }) }}">{{ entity.title }}</a></td>
+                <td>{{ entity.slug }}</td>
+                <td>{{ entity.excerpt }}</td>
+                <td>{{ entity.content }}</td>
+                <td>{{ entity.authoremail }}</td>
+                <td>{{ entity.statuspost }}</td>
+                <td>{{ entity.showcomment }}</td>
+                <td>{{ entity.enablecomment }}</td>
+                <td>{{ entity.viewspost }}</td>
+                <td>{% if entity.publishedat %}{{ entity.publishedat|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if entity.updatedat %}{{ entity.updatedat|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('post_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('post_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('post_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+#}
+{% endblock %}

@@ -1,0 +1,65 @@
+    <ul class="nav nav-tabs nav-justified" style="margin-bottom: 15px">
+        <li class="active">
+            <a href="#categories" data-toggle="tab"><i class="fa fa-share-alt"></i> Categories</a>
+        </li>
+        <li>
+            <a href="#tags" data-toggle="tab"><i class="fa fa-tags"></i> Tags</a>
+        </li>
+        <li>
+            <a href="#archives" data-toggle="tab"><i class="fa fa-folder"></i> Archives</a>
+        </li>
+    </ul>
+        
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div class="tab-pane fade in active" id="categories">
+            <div class="list-group">
+                <a class="list-group-item" href="{{ path('post') }}">All</a>
+                {% for category in categories %}
+                <a class="list-group-item" href="{{ path('blog_category', { 'slug': category.slug }) }}"> {{ category.name }}</a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="tab-pane fade" id="tags">
+            <div class="list-group">
+                {% for tag in tags %}
+                <a class="list-group-item" href="{{ path('blog_tag', { 'slug': tag.slug }) }}">{{ tag.name }}</a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="tab-pane fade" id="archives">
+            <div class="list-group">
+                {% for archive in archives %}
+                {# {{ (archive.year ~ '-' ~ archive.month)|date('F Y') }} #}
+                <a class="list-group-item" href="{{ path('blog_archive', { 'year': archive.year, 'month': archive.month }) }}">{{ archive.publishedat|date('F Y') }} ({{ archive.post }})</a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{#
+    <div class="page-header">
+        <h4>{{'Categories'|upper}}</h4>
+    </div>
+    <div class="page-header">
+        <h4>{{'Tags'|upper}}</h4>
+    </div>
+    <div class="page-header">
+        <h4>{{'Archives'|upper}}</h4>
+    </div>
+#}  
+    <div class="page-header">
+        <h4>{{'Recent Posts'|upper}}</h4>
+    </div>    
+
+    {% for entity in recent_posts|slice(0, 5) %}
+        <blockquote>
+            <p><a href="{{ path('post_show', { 'id': entity.id, 'category': entity.category.slug, 'title': entity.titleslug }) }}">{{ entity.title|title|raw }}</a></p>
+            <small>{% if entity.publishedat %}{{ entity.publishedat|date('l, F j, Y') }}{% endif %}</small>
+        </blockquote>
+    {% endfor %}
+
+{#
+    <div class="page-header">
+        <h4>{{'Calendar'|upper}}</h4>
+    </div>
+#}

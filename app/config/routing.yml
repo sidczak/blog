@@ -1,0 +1,14 @@
+blog_admin:
+    resource: "@BlogAdminBundle/Resources/config/routing.yml"
+    prefix:   /dashboard
+
+blog:
+    resource: "@BlogBundle/Resources/config/routing.yml"
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+    
+_liip_imagine:
+    resource: "@LiipImagineBundle/Resources/config/routing.xml"

@@ -1,0 +1,101 @@
+{% extends 'BlogAdminBundle::base.html.twig' %}
+
+{% block title %}Posts{% endblock %}
+
+{% block stylesheets %}{% endblock %}
+
+{% block javascripts %}{% endblock %}
+
+{% block body -%}
+    
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="page-header">Post list</h1>
+
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Author email</th>
+                            <th>Status post</th>
+                            <th>Views post</th>
+                            <th>Published at</th>
+                            <th>Updated at</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for key, entity in entities %}
+                        <tr class="{{ cycle(['odd', 'even'], key) }}">
+                            <td style="width: 50%">
+                                <h5><a href="{{ path('admin_post_show', { 'id': entity.id }) }}">{{ entity.title|raw }}</a></h5>
+                                {{ entity.excerpt|raw|slice(0, 300) }}
+                                {{ entity.excerpt|length > 300 ? '[...]' : ''}}
+                                {#{{ entity.excerpt|length > 300 ? entity.excerpt|raw|slice(0,300) ~ '[...]' : entity.excerpt|raw }}#}
+                                <hr/>
+                                <p>Actions:
+                                <a class="btn btn-primary btn-xs" href="{{ path('admin_post_show', { 'id': entity.id }) }}"><i class="fa fa-fw fa-file-text-o"></i> show</a>
+                                <a class="btn btn-primary btn-xs" href="{{ path('admin_post_edit', { 'id': entity.id }) }}"><i class="fa fa-fw fa-pencil"></i> edit</a>
+                                <a class="btn btn-danger btn-xs" href="{{ path('admin_post_remove', { 'id': entity.id }) }}" onclick="if(!confirm('{% trans %}Are you sure?{% endtrans %}')) { return false; }"><i class="fa fa-fw fa-close"></i>delete</a>
+                                {% if entity.showcomment %}
+                                    <a class="btn btn-success btn-xs" href="{{ path('admin_post_showcomment', { 'id': entity.id }) }}"><i class="fa fa-fw fa-check"></i> show comment</a>
+		                {% else %}
+                                    <a class="btn btn-danger btn-xs" href="{{ path('admin_post_showcomment', { 'id': entity.id }) }}"><i class="fa fa-fw fa-close"></i> show comment</a>
+		                {% endif %}
+                                {% if entity.enablecomment %}
+                                    <a class="btn btn-success btn-xs" href="{{ path('admin_post_enablecomment', { 'id': entity.id }) }}"><i class="fa fa-fw fa-check"></i> enable comment</a>
+		                {% else %}
+                                    <a class="btn btn-danger btn-xs" href="{{ path('admin_post_enablecomment', { 'id': entity.id }) }}"><i class="fa fa-fw fa-close"></i> enable comment</a>
+		                {% endif %}
+                                </p>
+                            </td>
+                            <td>{{ entity.authoremail }}</td>
+                            <td>{{ entity.statuspost }}</td>
+                            <td>{{ entity.viewspost }}</td>
+                            <td>{% if entity.publishedat %}{{ entity.publishedat|date('Y-m-d H:i:s') }}{% endif %}</td>
+                            <td>{% if entity.updatedat %}{{ entity.updatedat|date('Y-m-d H:i:s') }}{% endif %}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+                    
+            <a class="btn btn-default" href="{{ path('admin_post_new') }}">Create a new entry</a>
+        </div>
+    </div>
+        
+    <div class="row">
+        <div class="col-md-6">
+            <p><strong>{{ total_posts }}</strong> posts
+                {% if last_page > 1 %}
+                    - page <strong>{{ current_page }}/{{ last_page }}</strong>
+                {% endif %}
+            </p>
+        </div>
+        {% if last_page > 1 %}
+        <div class="col-md-6">
+            <div class="text-right">
+                <ul class="pagination">
+                  <li><a href="{{ path('admin_post', { 'page': 1 }) }}">&laquo;</a></li>
+                  <li><a href="{{ path('admin_post', { 'page': previous_page }) }}">&lsaquo;</a></li>
+
+                  {% for page in 1..last_page %}
+                    {% if page == current_page %}
+                      <li class="active"><a href="#">{{ page }}</a></li>
+                    {% else %}
+                      <li><a href="{{ path('admin_post', { 'page': page }) }}">{{ page }}</a></li>
+                    {% endif %}
+                  {% endfor %}
+                  
+                  <li><a href="{{ path('admin_post', { 'page': next_page }) }}">&rsaquo;</a></li>
+                  <li><a href="{{ path('admin_post', { 'page': last_page }) }}">&raquo;</a></li>
+                </ul>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+        
+</div>
+            
+{% endblock %}

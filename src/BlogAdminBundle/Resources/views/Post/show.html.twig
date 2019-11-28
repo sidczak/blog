@@ -1,0 +1,146 @@
+{% extends 'BlogAdminBundle::base.html.twig' %}
+
+{% block title %}Posts{% endblock %}
+
+{% block stylesheets %}{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+$(document).ready(function() {
+        
+    $("#images-list").sortable({
+        handle : '.handle',
+        update: function () {
+            
+            var data = $(this).sortable('serialize');
+            
+            $.ajax({
+                type  : "POST",
+                url   : "{{ path('admin_post_sort-image', { 'id': entity.id }) }}",
+                data  : {
+                    images_list: data
+                },
+                beforeSend: function() {
+                    //$("#loader").show();
+                },
+                success : function(msg) {
+                    //$("#ajax_txt_content").html(msg);
+                },
+                complete : function() {
+                    //$("#loader").hide();
+                },
+                error: function(error) {
+                    alert("Error");
+                }
+                
+            });
+        }
+        
+    });
+
+});
+</script>
+{% endblock %}
+
+{% block body -%}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="page-header">Post</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+        {% if entity.images is empty %}
+            <p>No images</p>
+        {% else %}   
+            <div id="images-list">
+            {% for image in entity.images %}
+                {% if image.image is empty %}
+                    <p>No images</p> 
+                {% else %}
+                    <div id="item-image_{{ image.id }}">
+                        <div class="text-center">
+                            <img class="img-responsive" src="{{ asset('bundles/blog/images/'~ image.image)|imagine_filter('post_img_md') }}" alt="{{ entity.title|raw }}">
+                            <a class="btn btn-default btn-xs handle"><i class="fa fa-arrows-alt"></i></a>
+                        </div><br/>
+                    </div>
+                {% endif %}
+            {% endfor %}
+            </div>
+        {% endif %}
+        </div>
+        <div class="col-md-6">
+            
+            <div class="table-responsive">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th>Id</th>
+                            <td>{{ entity.id }}</td>
+                        </tr>
+                        <tr>
+                            <th>Title</th>
+                            <td>{{ entity.title|raw }}</td>
+                        </tr>
+                        <tr>
+                            <th>Excerpt</th>
+                            <td>{{ entity.excerpt|raw }}</td>
+                        </tr>
+                        <tr>
+                            <th>Content</th>
+                            <td>{{ entity.content|raw }}</td>
+                        </tr>
+                        <tr>
+                            <th>Author email</th>
+                            <td>{{ entity.authoremail }}</td>
+                        </tr>
+                        <tr>
+                            <th>Status post</th>
+                            <td>{{ entity.statuspost }}</td>
+                        </tr>
+                        <tr>
+                            <th>Show comment</th>
+                            <td>
+                                {% if entity.showcomment %}
+                                    <label class="label label-success"><i class="fa fa-fw fa-check"></i></label>
+                                {% else %}
+                                    <label class="label label-danger"><i class="fa fa-fw fa-close"></i></label>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Enable comment</th>
+                            <td>
+                                {% if entity.enablecomment %}
+                                    <label class="label label-success"><i class="fa fa-fw fa-check"></i></label>
+                                {% else %}
+                                    <label class="label label-danger"><i class="fa fa-fw fa-close"></i></label>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Views post</th>
+                            <td>{{ entity.viewspost }}</td>
+                        </tr>
+                        <tr>
+                            <th>Published at</th>
+                            <td>{{ entity.publishedat|date('Y-m-d H:i:s') }}</td>
+                        </tr>
+                        <tr>
+                            <th>Updated at</th>
+                            <td>{{ entity.updatedat|date('Y-m-d H:i:s') }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <a class="btn btn-default" href="{{ path('admin_post') }}">Back to the list</a>
+            <a class="btn btn-default" href="{{ path('admin_post_edit', { 'id': entity.id }) }}">Edit</a>
+            {#{{ form(delete_form) }}#}
+            {{ form_start(delete_form, { 'attr': {'class': 'form-btn-inline'} }) }}
+                {{ form_widget(delete_form.submit, { 'attr': {'class': 'btn btn-danger'} }) }}
+            {{ form_end(delete_form) }}
+        </div>
+    </div>
+</div>
+{% endblock %}

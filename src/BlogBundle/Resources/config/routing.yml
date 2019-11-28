@@ -1,0 +1,41 @@
+blog_post:
+    resource: "@BlogBundle/Resources/config/routing/post.yml"
+    prefix:   /blog
+
+blog_homepage:
+    path:     /
+    defaults: { _controller: BlogBundle:Start:index }
+    
+blog_category:
+    path:     /category/{slug}/{page}
+    defaults: { _controller: BlogBundle:Category:show, page: 1 }
+    
+blog_tag:
+    path:     /tag/{slug}/{page}
+    defaults: { _controller: BlogBundle:Tag:show, page: 1 }
+    
+blog_archive:
+    path:     /archive/{year}/{month}/{page}
+    defaults: { _controller: "BlogBundle:Post:archive", page: 1 }
+    
+blog_archives_page:
+    path:     /archive
+    defaults: { _controller: "BlogBundle:Post:archivesPage" }
+    
+blog_author:
+    path:     /author/{email}/{page}
+    defaults: { _controller: "BlogBundle:Post:author", page: 1 }
+    
+blog_frontend_login:
+    path:   /frontend_login
+    defaults:  { _controller: BlogBundle:Security:login }
+
+blog_frontend_login_check:
+    path:   /frontend_login_check
+
+blog_frontend_logout:
+    path:   /frontend_logout
+    
+blog_user_registration:
+    path:     /register
+    defaults: { _controller: BlogBundle:Security:register }

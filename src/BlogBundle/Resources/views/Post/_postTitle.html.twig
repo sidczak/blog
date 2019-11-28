@@ -1,0 +1,8 @@
+                    <h2><a href="{{ path('post_show', { 'id': entity.id, 'category': entity.category.slug, 'title': entity.titleslug }) }}">{{ entity.title|title|raw }}</a></h2>
+                    <p>
+                        <i class="fa fa-calendar"></i> <a href="{{ path('post_show', { 'id': entity.id, 'category': entity.category.slug, 'title': entity.titleslug }) }}">{% if entity.publishedat %}{{ entity.publishedat|date('l, F j, Y') }}{% endif %}</a> | 
+                        <i class="fa fa-user"></i> <a href="{{ path('blog_author', { 'email': entity.authoremail }) }}">{{ entity.authoremail }}</a> | 
+                        <i class="fa fa-share-alt"></i> <a href="{{ path('blog_category', { 'slug': entity.category.slug }) }}">{{ entity.category }}</a> | 
+                        <i class="fa fa-eye"></i> {{ entity.viewspost }} | 
+                        <i class="fa fa-comments"></i> {{ entity.viewspost }}
+                    </p>

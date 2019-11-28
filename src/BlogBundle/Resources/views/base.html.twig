@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="robots" content="noindex,nofollow" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" type="image/x-icon" href="{{ asset('xfavicon.ico') }}" />
+        
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        
+
+        <link href="{{ asset('bundles/blog/css/bootstrap.css') }}" rel="stylesheet" type="text/css" media="all" />        
+        
+        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+        <link href="{{ asset('bundles/blog/assets/css/ie10-viewport-bug-workaround.css') }}" rel="stylesheet">
+
+        <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+        <!--[if lt IE 9]><script src="{{ asset('bundles/blog/assets/js/ie8-responsive-file-warning.js') }}"></script><![endif]-->
+        <script src="{{ asset('bundles/blog/assets/js/ie-emulation-modes-warning.js') }}"></script>
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <link href="{{ asset('bundles/blog/css/font-awesome.css') }}" rel="stylesheet" type="text/css" media="all" />
+        
+        <link href="{{ asset('bundles/blog/css/blog.css') }}" rel="stylesheet" type="text/css" media="all" />
+        
+        {% block stylesheets %}{% endblock %}
+        
+    </head>
+    <body>
+        {% block navigation %}
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse-bs">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="{{ path('blog_homepage') }}">BlogTutorial</a>
+                </div>
+                <div class="collapse navbar-collapse navbar-collapse-bs">
+                    <ul class="nav navbar-nav">
+                        <li><a href="{{ path('blog_homepage') }}">Start</a></li>
+                        <li><a href="{{ path('post') }}">Blog</a></li>
+                        <li><a href="{{ path('blog_archives_page') }}">Archives</a></li>
+                        {#
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown">Produkt <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">Blog</a></li>
+                                <li><a href="#">Shop</a></li>
+                            </ul>
+                        </li>
+                        #}
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        {% if is_granted('ROLE_USER') %}
+                            <li><a href="{{ path('blog_frontend_logout') }}">Log out</a></li>
+                        {% else %}
+                            <li><a href="{{ path('blog_frontend_login') }}">Sign in</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+
+            </div>
+        </nav>
+        {% endblock %}
+        
+        {% block body %}{% endblock %}
+        
+        {% block footer %}
+        <div class="footer">
+            <div class="container">
+                <p class="text-muted">Place sticky footer content here.</p>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="container">
+                <p class="pull-right"><a href="#">Back to top</a></p>
+                <p>&copy; 2015 Blog &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a> &middot; <a href="#">Dashboard</a></p>
+            </div>
+        </div>
+        {% endblock %}
+        
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="{{ asset('bundles/blog/assets/js/vendor/jquery.min.js') }}"><\/script>')</script>
+        <script src="{{ asset('bundles/blog/dist/js/bootstrap.min.js') }}"></script>
+        <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+        <script src="{{ asset('bundles/blog/assets/js/vendor/holder.min.js') }}"></script>
+        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+        <script src="{{ asset('bundles/blog/assets/js/ie10-viewport-bug-workaround.js') }}"></script>
+        
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

@@ -1,0 +1,31 @@
+            {% if entity.images|length %}
+            <div class="row">
+                <div class="col-md-12">
+                    {{ include('BlogBundle:Post:_postTitle.html.twig') }}
+                </div>
+                <div class="col-md-5">
+                    {#
+                    {% if entity.images %}
+                        {% for image in entity.images|slice(0,1) %}
+                            <img class="img-responsive img-center" src="{{ asset('bundles/blog/images/') }}{{ image.image }}" alt="{{ entity.title|raw }}"><br/>
+                        {% endfor %}
+                    {% endif %}
+                    #}
+
+                    {{ include('BlogBundle:Post:_postImage.html.twig') }}
+                </div>
+                <div class="col-md-7">
+                    {{ include('BlogBundle:Post:_postContent.html.twig') }}
+                </div>
+            </div>
+            {% else %}
+            <div class="row">
+                <div class="col-md-12">
+                    {{ include('BlogBundle:Post:_postTitle.html.twig') }}
+                    {{ include('BlogBundle:Post:_postContent.html.twig') }}
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="clearfix"></div>
+            <hr/>

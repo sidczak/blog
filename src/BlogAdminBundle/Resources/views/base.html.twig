@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="robots" content="noindex,nofollow" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" type="image/x-icon" href="{{ asset('xfavicon.ico') }}" />
+        
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        
+
+        <link href="{{ asset('bundles/blog/css/bootstrap.css') }}" rel="stylesheet" type="text/css" media="all" />        
+        
+        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+        <link href="{{ asset('bundles/blog/assets/css/ie10-viewport-bug-workaround.css') }}" rel="stylesheet">
+        {#<link href="{{ asset('bundles/blog/assets/css/jquery-ui.css') }}" rel="stylesheet">#}
+
+        <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+        <!--[if lt IE 9]><script src="{{ asset('bundles/blog/assets/js/ie8-responsive-file-warning.js') }}"></script><![endif]-->
+        <script src="{{ asset('bundles/blog/assets/js/ie-emulation-modes-warning.js') }}"></script>
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <link href="{{ asset('bundles/blog/css/font-awesome.css') }}" rel="stylesheet" type="text/css" media="all" />
+        
+        <link href="{{ asset('bundles/blog/css/dashboard.css') }}" rel="stylesheet" type="text/css" media="all" />
+        
+        {% block stylesheets %}{% endblock %}
+        
+    </head>
+    <body>
+        <div id="wrapper">
+            {% block navigation %}
+            <!-- Navigation -->
+            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+                <div class="container-fluid">
+
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="{{ path('blog_admin_homepage') }}">Blog Admin</a>
+                    </div>
+
+                    <div class="navbar-collapse xcollapse">
+                        <ul class="nav user-nav navbar-right">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <span class="caret"></span></a>
+                                <ul class="dropdown-menu dropdown-alerts">
+                                    <li>
+                                        <a href="#"><i class="fa fa-comment fa-fw"></i> New Comment <span class="text-muted small">4 minutes ago</span></a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a href="#"><i class="fa fa-twitter fa-fw"></i> 3 New Followers <span class="text-muted small">14 minutes ago</span></a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a href="#"><i class="fa fa-envelope fa-fw"></i> Message Sent <span class="text-muted small">4 minutes ago</span></a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a href="#"><i class="fa fa-tasks fa-fw"></i> New Task <span class="text-muted small">4 minutes ago</span></a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a href="#"><i class="fa fa-upload fa-fw"></i> Server Rebooted <span class="text-muted small">4 minutes ago</span></a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li class="text-center"><a href="#">Read All Alerts <i class="fa fa-angle-right"></i></a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <span class="caret"></span></a>
+                                <ul class="dropdown-menu dropdown-messages">
+                                <li>
+                                    <a href="#">
+                                        <span class="pull-right text-muted">4 minutes ago</span> <b>John Smith</b><br/>
+                                        <span class="msg-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</span>
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="#">
+                                        <span class="pull-right text-muted">4 minutes ago</span> <b>John Smith</b><br/>
+                                        <span class="msg-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</span>
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="#">
+                                        <span class="pull-right text-muted">4 minutes ago</span> <b>John Smith</b><br/>
+                                        <span class="msg-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</span>
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="#">
+                                        <span class="pull-right text-muted">4 minutes ago</span> <b>John Smith</b><br/>
+                                        <span class="msg-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</span>
+                                    </a>
+                                </li>
+                                    <li class="divider"></li>
+                                    <li class="text-center"><a href="#">Read All New Messages <i class="fa fa-angle-right"></i></a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> John Smith {{ app.user ? app.user.username : 'Anonymous' }} <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
+                                    </li>
+                                    <li>
+                                        <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
+                                    </li>
+                                    <li>
+                                        <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a href="{{ path('blog_backend_logout') }}"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>    
+                <div class="sidebar">
+                    <div class="collapse navbar-collapse navbar-ex1-collapse">
+                        <ul class="nav sidebar-nav">
+                            <li class="{{ app.request.get('_route') == 'blog_admin_homepage' ? 'active' : '' }}">
+                                <a href="{{ path('blog_admin_homepage') }}"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                            </li>
+                            <li class="{{ app.request.get('_route') == 'admin_post' ? 'active' : '' }}">
+                                <a href="{{ path('admin_post') }}"><i class="fa fa-fw fa-table"></i> Posts</a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Dropdown <i class="fa fa-fw fa-caret-down"></i></a>
+                                <ul id="demo" class="nav collapse">
+                                    <li>
+                                        <a href="#">Dropdown Item</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Dropdown Item</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-fw fa-file"></i> Blank Page</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            {% endblock %}
+
+            {% for flashMessage in app.session.flashbag.get('notice') %}
+            <div class="flash-notice">
+                {{ flashMessage }}
+            </div>
+            {% endfor %}
+
+            {% for flashMessage in app.session.flashbag.get('error') %}
+            <div class="flash-error">
+                {{ flashMessage }}
+            </div>
+            {% endfor %}
+            
+            <div id="page-wrapper">
+            {% block body %}
+
+            {% endblock %}
+            </div>
+        </div>
+        
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+        <script>window.jQuery || document.write('<script src="{{ asset('bundles/blog/assets/js/vendor/jquery.min.js') }}"><\/script>')</script>
+        <script>window.jQuery || document.write('<script src="{{ asset('bundles/blog/assets/js/vendor/jquery-ui.min.js') }}"><\/script>')</script>
+        <script src="{{ asset('bundles/blog/dist/js/bootstrap.min.js') }}"></script>
+        <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+        <script src="{{ asset('bundles/blog/assets/js/vendor/holder.min.js') }}"></script>
+        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+        <script src="{{ asset('bundles/blog/assets/js/ie10-viewport-bug-workaround.js') }}"></script>
+        
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>
+

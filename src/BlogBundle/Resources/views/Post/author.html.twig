@@ -1,0 +1,72 @@
+{% extends 'BlogBundle::base.html.twig' %}
+
+{% block title %}Blog{% endblock %}
+
+{% block stylesheets %}{% endblock %}
+
+{% block javascripts %}{% endblock %}
+
+{% block body -%}
+    
+<div class="container">
+    <div class="row">    
+    	<div class="col-lg-12">
+            <div class="page-header">
+                <h2>Author: {{ author }}</h2>
+            </div>
+            <ul class="breadcrumb">
+                <li><a href="{{ path('blog_homepage') }}">Start</a></li>
+                <li><a href="{{ path('post') }}">Blog</a></li>
+                <li class="active">Author: {{ author }}</li>
+            </ul>
+    	</div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+        {% for entity in entities %}
+            
+            {{ include('BlogBundle:Post:_post.html.twig') }}
+            
+        {% endfor %}
+        
+            <div class="row">
+                <div class="col-md-12">
+                    <p><strong>{{ total_posts }}</strong> posts by this author
+                        {% if last_page > 1 %}
+                            - page <strong>{{ current_page }}/{{ last_page }}</strong>
+                        {% endif %}</p>
+                </div>
+            </div>
+
+            {% if last_page > 1 %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-center">
+                        <ul class="pagination">
+                          <li><a href="{{ path('blog_author', { 'email': author, 'page': 1 }) }}">&lsaquo;</a></li>
+                          <li><a href="{{ path('blog_author', { 'email': author, 'page': previous_page }) }}">&laquo;</a></li>
+
+                      {% for page in 1..last_page %}
+                        {% if page == current_page %}
+                          <li class="active"><a href="#">{{ page }}</a></li>
+                        {% else %}
+                          <li><a href="{{ path('blog_author', { 'email': author, 'page': page }) }}">{{ page }}</a></li>
+                        {% endif %}
+                      {% endfor %}
+
+                          <li><a href="{{ path('blog_author', { 'email': author, 'page': next_page }) }}">&raquo;</a></li>
+                          <li><a href="{{ path('blog_author', { 'email': author, 'page': last_page }) }}">&rsaquo;</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {% endif %} 
+        
+        </div>
+        <div class="col-md-4">
+            {{ include('BlogBundle:Post:_sidebar.html.twig', { 'categories': categories, 'tags': tags, 'archives': archives }) }}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

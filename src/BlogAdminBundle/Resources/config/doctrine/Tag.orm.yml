@@ -1,0 +1,29 @@
+# src/BlogAdminBundle/Resources/config/doctrine/Tag.orm.yml
+BlogAdminBundle\Entity\Tag:
+  type: entity
+  repositoryClass: BlogAdminBundle\Repository\TagRepository
+  table: tag
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  fields:
+    name:
+      type: string
+      length: 50
+      unique: true
+    slug:
+      type: string
+      length: 50
+      unique: true
+    description:
+      type: string
+      length: 255
+      nullable: true
+  manyToMany:
+    posts:
+      targetEntity: Post
+      mappedBy: tags
+      #cascade: [ persist ]
+  lifecycleCallbacks:
+    prePersist: [ setSlugValue ]

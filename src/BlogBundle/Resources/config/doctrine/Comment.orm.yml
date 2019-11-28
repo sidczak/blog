@@ -1,0 +1,38 @@
+# src/BlogBundle/Resources/config/doctrine/Comment.orm.yml
+BlogBundle\Entity\Comment:
+  type: entity
+  #repositoryClass: BlogBundle\Repository\CommentRepository
+  table: comment
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  fields:
+    username:
+      type: string
+      length: 50
+    author_email:
+      type: string
+      length: 50
+    website:
+      type: string
+      length: 50
+      nullable: true
+    content:
+      type: text
+    is_approved:
+      type: boolean
+      options:
+        default: true
+    published_at:
+      type: datetime
+  manyToOne:
+    post:
+      targetEntity: Post
+      inversedBy: comments
+      #cascade: [ persist ]
+      joinColumn:
+        name: post_id
+        referencedColumnName: id
+  lifecycleCallbacks:
+    prePersist: [ setPublishedAtValue ]

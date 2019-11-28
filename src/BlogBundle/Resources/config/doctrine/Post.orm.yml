@@ -1,0 +1,83 @@
+# src/BlogBundle/Resources/config/doctrine/Post.orm.yml
+BlogBundle\Entity\Post:
+  type: entity
+  repositoryClass: BlogBundle\Repository\PostRepository
+  table: post
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  fields:
+    title:
+      type: string
+      length: 255
+      unique: true
+    slug:
+      type: string
+      length: 255
+      unique: true
+    excerpt:
+      type: text
+      nullable: true
+    content:
+      type: text
+    author_email:
+      type: string
+      length: 255
+    status_post:
+      type: string
+      length: 20
+      options:
+        #publish, expect, draft
+        default: publish
+    show_comment:
+      type: boolean
+      options:
+        default: true
+    enable_comment:
+      type: boolean
+      options:
+        default: true
+    views_post:
+        type: integer
+        nullable: true
+    published_at:
+      type: datetime
+    updated_at:
+      type: datetime
+      nullable: true
+  oneToMany:
+    images:
+      targetEntity: Image
+      mappedBy: post
+      cascade: [ remove ]
+      orderBy:
+        rank: ASC
+    comments:
+      targetEntity: Comment
+      mappedBy: post
+      cascade: [ remove ]
+  manyToOne:
+    category:
+      targetEntity: Category
+      inversedBy: posts
+      #cascade: [ persist ]
+      joinColumn:
+        name: category_id
+        referencedColumnName: id
+  manyToMany:
+    tags:
+      targetEntity: Tag
+      inversedBy: posts
+      #cascade: [ persist ]
+      joinTable:
+        name: post_tag
+        joinColumns:
+          post_id:
+            referencedColumnName: id
+        inverseJoinColumns:
+          tag_id:
+            referencedColumnName: id
+  lifecycleCallbacks:
+    prePersist: [ setPublishedAtValue, setSlugValue ] 
+    preUpdate: [ setUpdatedAtValue ]

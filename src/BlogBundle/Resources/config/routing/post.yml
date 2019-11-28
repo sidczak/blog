@@ -1,0 +1,32 @@
+post:
+    path:     /{page}
+    defaults: { _controller: "BlogBundle:Post:index", page: 1 }
+
+post_show:
+    path:     /{id}/{category}/{title}
+    defaults: { _controller: "BlogBundle:Post:show" }
+    requirements:
+        id:  \d+
+
+post_new:
+    path:     /new
+    defaults: { _controller: "BlogBundle:Post:new" }
+
+post_create:
+    path:     /create
+    defaults: { _controller: "BlogBundle:Post:create" }
+    methods:  POST
+
+post_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BlogBundle:Post:edit" }
+
+post_update:
+    path:     /{id}/update
+    defaults: { _controller: "BlogBundle:Post:update" }
+    methods:  [POST, PUT]
+
+post_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BlogBundle:Post:delete" }
+    methods:  [POST, DELETE]

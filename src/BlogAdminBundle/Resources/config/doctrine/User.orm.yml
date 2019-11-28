@@ -1,0 +1,31 @@
+# src/BlogAdminBundle/Resources/config/doctrine/User.orm.yml
+BlogAdminBundle\Entity\User:
+  type: entity
+  #repositoryClass: BlogAdminBundle\Repository\UserRepository
+  table: user
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  fields:      
+    username:
+      type: string
+      length: 50
+      unique: true
+    email:
+      type: string
+      length: 50
+      unique: true
+    password:
+      type: string
+      length: 64
+    roles:
+      type: json_array
+    is_active:
+      type: boolean
+      options:
+        default: false
+    created_at:
+      type: datetime
+  lifecycleCallbacks:
+    prePersist: [ setCreatedAtValue ]

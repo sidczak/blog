@@ -1,0 +1,11 @@
+                    <p>
+                        {{ entity.excerpt|raw|slice(0, 300) }}
+                        {{ entity.excerpt|length > 300 ? '[...]' : ''}}
+                        {#{{ entity.excerpt|length > 300 ? entity.excerpt|raw|slice(0,300) ~ '[...]' : entity.excerpt|raw }}#}
+                    </p>
+                    <a class="pull-right btn btn-primary" href="{{ path('post_show', { 'id': entity.id, 'category': entity.category.slug, 'title': entity.titleslug }) }}">Read More <i class="fa fa-angle-right"></i></a>            
+                    <p>Tags:
+                        {% for tag in entity.tags %}
+                            <a class="btn btn-default btn-xs" href="{{ path('blog_tag', { 'slug': tag.slug }) }}">{{ tag.name }}</a>
+                        {% endfor %}
+                    </p>

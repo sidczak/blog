@@ -1,0 +1,27 @@
+# src/BlogAdminBundle/Resources/config/doctrine/Image.orm.yml
+BlogAdminBundle\Entity\Image:
+  type: entity
+  repositoryClass: BlogAdminBundle\Repository\ImageRepository
+  table: image
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  fields:
+    image:
+      type: string
+      length: 255
+    rank:
+      type: integer
+      options:
+        default: 1
+  manyToOne:
+    post:
+      targetEntity: Post
+      inversedBy: images
+      #cascade: [ persist ]
+      joinColumn:
+        name: post_id
+        referencedColumnName: id
+  lifecycleCallbacks:
+    postRemove: [ removeUpload ]

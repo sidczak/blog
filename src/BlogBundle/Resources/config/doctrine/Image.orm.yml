@@ -1,0 +1,25 @@
+# src/BlogBundle/Resources/config/doctrine/Image.orm.yml
+BlogBundle\Entity\Image:
+  type: entity
+  repositoryClass: BlogBundle\Repository\ImageRepository
+  table: image
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  fields:
+    image:
+      type: string
+      length: 255
+    rank:
+      type: integer
+      options:
+        default: 1
+  manyToOne:
+    post:
+      targetEntity: Post
+      inversedBy: images
+      #cascade: [ persist ]
+      joinColumn:
+        name: post_id
+        referencedColumnName: id
